@@ -1,4 +1,4 @@
-import React, { useState, useRef, Suspense } from 'react'
+import React, { useState, useRef } from 'react'
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'
 import './App.css'
 
@@ -47,11 +47,9 @@ function App() {
               }}>
                 <SearchBar />
               </SearchContext.Provider>
-              <Suspense fallback={<h2>Looking for results...</h2>}>
                 <DataContext.Provider value={data}>
                   <Gallery />
                 </DataContext.Provider>
-              </Suspense>
             </div>
           } />
           <Route path='/album/:id' element={<AlbumView />} />
