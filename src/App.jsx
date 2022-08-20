@@ -1,4 +1,4 @@
-import React, { useState, useRef } from 'react'
+import React, { useState, useRef, Suspense } from 'react'
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'
 import './App.css'
 
@@ -30,14 +30,13 @@ function App() {
         setMessage('Not Found')
         setData([])
       }
-      console.log(resData)
     }
     fetchData()
   }
 
   return (
     <div className="App">
-          {message}
+      {message}
       <Router>
         <Routes>
           <Route path='/' element={
@@ -48,9 +47,11 @@ function App() {
               }}>
                 <SearchBar />
               </SearchContext.Provider>
-              <DataContext.Provider value={data}>
-                <Gallery />
-              </DataContext.Provider>
+              <Suspense fallback={<h2>Looking for results...</h2>}>
+                <DataContext.Provider value={data}>
+                  <Gallery />
+                </DataContext.Provider>
+              </Suspense>
             </div>
           } />
           <Route path='/album/:id' element={<AlbumView />} />
